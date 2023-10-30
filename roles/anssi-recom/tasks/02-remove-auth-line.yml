@@ -1,20 +1,3 @@
-- name: Find /etc/sudoers.d/ files
-  find:
-    paths:
-    - /etc/sudoers.d/
-  register: sudoers
-  tags:
-  - CCE-82202-3
-  - DISA-STIG-RHEL-08-010381
-  - NIST-800-53-CM-6(a)
-  - NIST-800-53-IA-11
-  - low_complexity
-  - low_disruption
-  - medium_severity
-  - no_reboot_needed
-  - restrict_strategy
-  - sudo_remove_no_authenticate
-
 - name: Remove lines containing !authenticate from sudoers files
   replace:
     regexp: (^(?!#).*[\s]+\!authenticate.*$)
@@ -35,3 +18,11 @@
   - no_reboot_needed
   - restrict_strategy
   - sudo_remove_no_authenticate
+  when:
+  - DISA_STIG_RHEL_08_010381 | bool
+  - low_complexity | bool
+  - low_disruption | bool
+  - medium_severity | bool
+  - no_reboot_needed | bool
+  - restrict_strategy | bool
+  - sudo_remove_no_authenticate | bool

@@ -1,5 +1,10 @@
 ---
-- include: ./01-dnfInstalled.yml
-- include: ./02-noPasswd.yml
-- include: ./03-reAuth.yml
-- include: ./04-configureDnf.yml
+- include: ./01-find-sudoers.yml
+- include: ./02-remove-auth-line.yml
+  #- include: ./03-reAuth.yml
+  #- include: ./04-configureDnf.yml
+  #- include: ./05-secDnf.yml
+  #- include: ./06-gpgCheck.yml
+  #- include: ./07-gpgCheckLocal.yml
+  #- include: ./08-gpgCheckYum.yml
+  #- include: ./09-RHGpgKeyInstalled.yml
