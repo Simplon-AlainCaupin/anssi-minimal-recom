@@ -1,36 +1,25 @@
 #!/usr/bin/python3
+import requests
 import os
 
-def split_file(input_file):
-    if not os.path.exists(input_file): # Vérifie l'existence du fichier en entrée
-        print(f"Input file '{input_file}' not found.")
-        return
+# Récupération du playbook sur le repo officiel rhel8 
+url = 'https://raw.githubusercontent.com/RedHatOfficial/ansible-role-rhel8-anssi_bp28_minimal/b6bfa736d64c6c03105ca421b7959e45d6046f1d/tasks/main.yml'
+response = requests.get(url)
+playbook_content = response.text
 
-    with open(input_file, 'r') as f:
-        lines = f.readlines()
+# Séparation des tasks suivant le pattern "- name:"
+tasks = playbook_content.split("\n- name: ")[1:]
 
-    # output_dir = "output"
-    # os.makedirs(output_dir, exist_ok=True)
+# Optionnel : remplacer la valeur de output_dir pour changer le répertoire cible 
+# par défaut répertoire actuel
+output_dir = '.'
+os.makedirs(output_dir, exist_ok=True)
 
-    task_number = 1
-    current_output_file = None
+# Fichiers générés par une boucle pour chaque itération de "tasks"
+for index, task in enumerate(tasks):
+    task_content = f"- name: {task.strip()}"
+    with open(os.path.join(output_dir, f'task_{index:03d}.yml'), 'w') as task_file:
+        task_file.write(task_content)
 
-    for line in lines: # Boucle pour incrémenter le nom du ficher de 01 à "n" (nb de lignes vides)
-        if line.strip():  # Vérifie si la ligne est vide ou non
-            if current_output_file is None:
-            #  current_output_file = open(f"{output_dir}/{task_number:02d}-task", "w")
-               current_output_file = open(f"./{task_number:02d}-task.yml", "w")
-            current_output_file.write(line)
-        else:
-            if current_output_file is not None:
-                current_output_file.close()
-                task_number += 1
-                current_output_file = None
+print("Fichiers générés avec succès dans 'output_dir'")
 
-    # Ferme le dernier fichier ouvert par le script
-    if current_output_file is not None:
-        current_output_file.close()
-
-if __name__ == "__main__":
-    input_file = "./tasks.yml"  # chemin vers le ficher "tasks", à changer suivant le nom du fichier
-    split_file(input_file)

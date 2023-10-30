@@ -1,2 +1,0 @@
-- name: Grep for yum repo section names
-  shell: 'set -o pipefail
