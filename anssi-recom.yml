@@ -1,0 +1,10 @@
+---
+- name: test-role-recom
+  hosts: localhost
+  gather_facts: yes
+  become: no
+
+  tasks:
+    - name: test-recom
+      import_role:
+        name: anssi-recom
