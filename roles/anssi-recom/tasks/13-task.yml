@@ -1,0 +1,1 @@
+    grep -HEr ''^\[.+\]'' -r /etc/yum.repos.d/

@@ -1,0 +1,2 @@
+- name: Get all world-writable directories with no sticky bits set
+  shell: 'set -o pipefail
