@@ -1,0 +1,14 @@
+output "resource_group" {
+  description = "The Azure Resource Group object."
+  value       = azurerm_resource_group.example
+}
+
+output "virtual_network" {
+  description = "The Azure Virtual Network object."
+  value       = azurerm_virtual_network.example
+}
+
+output "subnet" {
+  description = "The Azure Subnet object."
+  value       = azurerm_subnet.example
+}
